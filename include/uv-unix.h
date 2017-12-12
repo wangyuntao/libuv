@@ -192,6 +192,19 @@ typedef struct {
   char* errmsg;
 } uv_lib_t;
 
+/*
+ UV_LOOP_PRIVATE_FIELDS 字段注释
+
+ watcher_queue:
+   等待注册的io事件队列，比如我要注册个epoll的epollin事件，就是通过调用对应的方法，
+   把一个uv__io_t对象挂到这个队列上，libuv的下一个tick，就会把该事件注册到epoll的fd上
+
+ watchers:
+   正在监听io事件的对象，例如一个epollin事件来了，根据fd在watchers里找到对应的watcher，
+   然后根据这个watcher在找到对应的stream对象，再调用read方法
+
+ */
+
 #define UV_LOOP_PRIVATE_FIELDS                                                \
   unsigned long flags;                                                        \
   int backend_fd;                                                             \
