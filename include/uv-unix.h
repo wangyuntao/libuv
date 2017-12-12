@@ -90,6 +90,15 @@ typedef void (*uv__io_cb)(struct uv_loop_s* loop,
                           unsigned int events);
 typedef struct uv__io_s uv__io_t;
 
+/*
+ uv__io_t对象一般被包含在其他对象内，比如uv_stream_t，用来注册到backend_fd（比如epoll的fd）中，
+ 来监听io事件，io事件来了，调用uv__io_s里的cb，cb里根据事件类型，进一步调用更具体对象的callback，
+ 比如uv_stream_t里的read callback
+
+ 如果uv__io_s是在uv_stream_t对象内，cb就是uv__stream_io
+ 如果是在个listen状态的uv_tcp_t内，cb就是uv__server_io
+ */
+
 struct uv__io_s {
   uv__io_cb cb;
   void* pending_queue[2];
@@ -201,7 +210,8 @@ typedef struct {
 
  watchers:
    正在监听io事件的对象，例如一个epollin事件来了，根据fd在watchers里找到对应的watcher，
-   然后根据这个watcher在找到对应的stream对象，再调用read方法
+   然后调用这个watcher(uv__io_t)的callback方法(cb)，cb里再根据event，回调更具体类型的callback，
+   比如调用stream类型对象的on_read方法
 
  */
 

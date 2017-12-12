@@ -342,7 +342,7 @@ void uv__io_poll(uv_loop_t* loop, int timeout) {
     nevents = 0;
 
     assert(loop->watchers != NULL);
-    loop->watchers[loop->nwatchers] = (void*) events;
+    loop->watchers[loop->nwatchers] = (void*) events; // uv__platform_invalidate_fd里要用到
     loop->watchers[loop->nwatchers + 1] = (void*) (uintptr_t) nfds;
     for (i = 0; i < nfds; i++) {
       pe = events + i;
