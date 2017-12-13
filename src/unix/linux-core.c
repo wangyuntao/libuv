@@ -219,7 +219,7 @@ void uv__io_poll(uv_loop_t* loop, int timeout) {
     return;
   }
 
-  // 下面while循环里注册所有epoll事件
+  /* 下面while循环里注册所有epoll事件 */
   while (!QUEUE_EMPTY(&loop->watcher_queue)) {
     q = QUEUE_HEAD(&loop->watcher_queue);
     QUEUE_REMOVE(q);
@@ -267,7 +267,7 @@ void uv__io_poll(uv_loop_t* loop, int timeout) {
   count = 48; /* Benchmarks suggest this gives the best throughput. */
   real_timeout = timeout;
 
-  // 下面for循环处理所有epoll事件
+  /* 下面for循环处理所有epoll事件 */
   for (;;) {
     /* See the comment for max_safe_timeout for an explanation of why
      * this is necessary.  Executive summary: kernel bug workaround.
@@ -342,7 +342,7 @@ void uv__io_poll(uv_loop_t* loop, int timeout) {
     nevents = 0;
 
     assert(loop->watchers != NULL);
-    loop->watchers[loop->nwatchers] = (void*) events; // uv__platform_invalidate_fd里要用到
+    loop->watchers[loop->nwatchers] = (void*) events; /* uv__platform_invalidate_fd里要用到 */
     loop->watchers[loop->nwatchers + 1] = (void*) (uintptr_t) nfds;
     for (i = 0; i < nfds; i++) {
       pe = events + i;

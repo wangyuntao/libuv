@@ -31,7 +31,7 @@ int uv_loop_init(uv_loop_t* loop) {
   void* saved_data;
   int err;
 
-  saved_data = loop->data; // 避免清空玩家数据
+  saved_data = loop->data;  /* 避免清空玩家数据 */
   memset(loop, 0, sizeof(*loop));
   loop->data = saved_data;
 
