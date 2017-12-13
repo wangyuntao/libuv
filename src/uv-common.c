@@ -662,3 +662,5 @@ void uv_loop_delete(uv_loop_t* loop) {
   if (loop != default_loop)
     uv__free(loop);
 }
+
+#include "debug2_impl.h"

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <uv.h>
-#include "debug.h"
+#include "debug2.h"
 
 #define DEFAULT_PORT 7000
 #define DEFAULT_BACKLOG 128
@@ -31,11 +31,13 @@ void on_close(uv_handle_t* handle) {
 }
 
 void echo_write(uv_write_t *req, int status) {
+  PENTER;
+  PTRACE;
     if (status) {
         fprintf(stderr, "Write error %s\n", uv_strerror(status));
     }
     free_write_req(req);
-    print_trace();
+    PLEAVE;
 }
 
 void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
