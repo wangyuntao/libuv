@@ -31,13 +31,10 @@ void on_close(uv_handle_t* handle) {
 }
 
 void echo_write(uv_write_t *req, int status) {
-  PENTER;
-  PTRACE;
     if (status) {
         fprintf(stderr, "Write error %s\n", uv_strerror(status));
     }
     free_write_req(req);
-    PLEAVE;
 }
 
 void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
