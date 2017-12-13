@@ -13,11 +13,11 @@ void print_trace(const char *s) {
   strings = backtrace_symbols(array, n);
 
   printf("/*\n");
-  printf("\"%s\" obtained %d stack frames.\n", s, n);
+  printf(" * %s OBTAINED %d STACK FRAMES:\n *\n", s, n);
 
   for (i = 0; i < n; i++)
-    printf("%s\n", strings[i]);
+    printf(" * %s\n", strings[i]);
 
-  printf("*/\n");
+  printf(" */\n");
   free(strings);
 }
